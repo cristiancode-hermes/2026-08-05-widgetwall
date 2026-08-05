@@ -1,0 +1,10 @@
+{
+  "name": "widgetwall",
+  "private": true,
+  "workspaces": ["apps/*"],
+  "scripts": {
+    "build:api": "cd apps/api && npm run build",
+    "build:web": "cd apps/web && ./node_modules/.bin/ng build",
+    "build": "npm run build:api && npm run build:web"
+  }
+}

@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.env
+*.db
+*.sqlite
+.angular/
+*.log
+tsconfig.tsbuildinfo
+*.tsbuildinfo
+.cache/
+_web_node_modules/

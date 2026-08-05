@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #4F46E5;
+  --color-primary-50: #EEF2FF;
+  --color-primary-100: #E0E7FF;
+  --color-primary-200: #C7D2FE;
+  --color-primary-300: #A5B4FC;
+  --color-primary-400: #818CF8;
+  --color-primary-500: #6366F1;
+  --color-primary-600: #4F46E5;
+  --color-primary-700: #4338CA;
+  --color-primary-800: #3730A3;
+  --color-primary-900: #312E81;
+
+  --color-secondary: #7C3AED;
+  --color-accent: #F59E0B;
+
+  --color-surface: #FFFFFF;
+  --color-surface-secondary: #F8FAFC;
+
+  --color-ink: #1E293B;
+  --color-ink-secondary: #64748B;
+
+  --color-border: #E2E8F0;
+
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-danger: #EF4444;
+}
+
+@layer base {
+  :root {
+    --color-primary: #4F46E5;
+    --color-primary-hover: #4338CA;
+    --color-secondary: #7C3AED;
+    --color-accent: #F59E0B;
+    --color-surface: #FFFFFF;
+    --color-surface-secondary: #F8FAFC;
+    --color-ink: #1E293B;
+    --color-ink-secondary: #64748B;
+    --color-border: #E2E8F0;
+    --color-success: #10B981;
+    --color-warning: #F59E0B;
+    --color-danger: #EF4444;
+
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --space-2xl: 48px;
+
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-full: 9999px;
+
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    --shadow-widget-drag: 0 20px 25px -5px rgb(0 0 0 / 0.15);
+  }
+
+  [data-theme="dark"] {
+    --color-primary: #818CF8;
+    --color-primary-hover: #A5B4FC;
+    --color-secondary: #A78BFA;
+    --color-accent: #FBBF24;
+    --color-surface: #1E1B4B;
+    --color-surface-secondary: #0F172A;
+    --color-ink: #F1F5F9;
+    --color-ink-secondary: #94A3B8;
+    --color-border: #334155;
+    --color-success: #34D399;
+    --color-warning: #FBBF24;
+    --color-danger: #F87171;
+
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.3);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.35);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4);
+    --shadow-widget-drag: 0 20px 25px -5px rgb(0 0 0 / 0.5);
+  }
+}
