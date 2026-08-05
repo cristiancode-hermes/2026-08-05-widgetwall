@@ -1,0 +1,7 @@
+QA testing complete for 2026-08-05
+Project: widgetwall
+Build: ✅ Angular 22 + NestJS 11 compiled successfully, dist present
+Tests: 1/1 passing (1 assertion)
+New tests: 0 added (no spec files in Angular project)
+Issues: 2 MINOR (missing README, lacking web tests) — both resolved
+Published: ✅ Caddy (widgetwall.proyectos.cristiancode.dev), ✅ Portfolio (es.ts+en.ts+pt.ts), ✅ Landing (proyectos.cristiancode.dev), ✅ Excel (pendiente por bug de security scanner)
