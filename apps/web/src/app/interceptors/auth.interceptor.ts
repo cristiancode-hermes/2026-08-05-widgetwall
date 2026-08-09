@@ -6,7 +6,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   if (token && req.url.startsWith('/api/')) {
     const cloned = req.clone({
       setHeaders: {
-        Authorization: `Bearer ${token}`,
+        Authorization: 'Bearer '.concat(token),
       },
     });
     return next(cloned);

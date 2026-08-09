@@ -70,3 +70,8 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* WidgetWall hover aliases (vars in :root, Tailwind v4 no genera utilidades) */
+.hover\:bg-primary-hover:hover { background: var(--color-primary-hover); }
+.hover\:text-primary-hover:hover { color: var(--color-primary-hover); }
+.hover\:border-primary-hover:hover { border-color: var(--color-primary-hover); }

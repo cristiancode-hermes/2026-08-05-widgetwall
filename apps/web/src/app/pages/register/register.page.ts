@@ -9,20 +9,18 @@ import { HttpErrorResponse } from '@angular/common/http';
   standalone: true,
   imports: [FormsModule, RouterLink],
   template: `
-    <div class="register-container min-h-screen flex items-center justify-center px-4">
-      <div class="register-card w-full max-w-sm bg-surface rounded-lg shadow-lg p-8 border border-border">
+    <div class="auth-page">
+      <div class="auth-card">
         <!-- Logo -->
-        <div class="text-center mb-6">
-          <div class="logo-icon w-12 h-12 bg-primary rounded-xl flex items-center justify-center text-white font-bold text-xl mx-auto mb-3">
-            W
-          </div>
-          <h1 class="text-2xl font-bold text-ink">Create account</h1>
-          <p class="text-sm text-ink-secondary mt-1">Join WidgetWall today</p>
+        <div class="auth-header">
+          <div class="logo-icon">W</div>
+          <h1 class="auth-title">Create account</h1>
+          <p class="auth-subtitle">Join WidgetWall today</p>
         </div>
 
         <!-- Error banner -->
         @if (errorMessage()) {
-          <div class="error-banner bg-danger/10 border border-danger/30 text-danger text-sm px-4 py-3 rounded-lg mb-4 flex items-center gap-2">
+          <div class="error-banner">
             <span>⚠️</span>
             <span>{{ errorMessage() }}</span>
           </div>
@@ -30,9 +28,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 
         <!-- Validation errors -->
         @if (validationErrors().length > 0) {
-          <div class="validation-errors mb-4">
+          <div class="validation-errors">
             @for (err of validationErrors(); track err) {
-              <div class="text-danger text-xs flex items-center gap-1 mb-1">
+              <div class="validation-item">
                 <span>•</span>
                 <span>{{ err }}</span>
               </div>
@@ -41,70 +39,70 @@ import { HttpErrorResponse } from '@angular/common/http';
         }
 
         <!-- Register form -->
-        <form (ngSubmit)="onSubmit()" class="flex flex-col gap-4">
-          <div class="field-group">
-            <label for="username" class="block text-sm font-medium text-ink mb-1.5">Username</label>
+        <form (ngSubmit)="onSubmit()" class="auth-form">
+          <div class="field">
+            <label for="username">Username</label>
             <input
               id="username"
               type="text"
               name="username"
-              [(ngModel)]="username"
+              [ngModel]="username()"
+              (ngModelChange)="username.set($event)"
               required
               autocomplete="username"
               placeholder="yourname"
-              class="w-full px-4 py-2.5 border border-border rounded-lg bg-surface text-ink text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
             />
           </div>
 
-          <div class="field-group">
-            <label for="email" class="block text-sm font-medium text-ink mb-1.5">Email</label>
+          <div class="field">
+            <label for="email">Email</label>
             <input
               id="email"
               type="email"
               name="email"
-              [(ngModel)]="email"
+              [ngModel]="email()"
+              (ngModelChange)="email.set($event)"
               required
               autocomplete="email"
               placeholder="you@example.com"
-              class="w-full px-4 py-2.5 border border-border rounded-lg bg-surface text-ink text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
             />
           </div>
 
-          <div class="field-group">
-            <label for="password" class="block text-sm font-medium text-ink mb-1.5">Password</label>
+          <div class="field">
+            <label for="password">Password</label>
             <input
               id="password"
               type="password"
               name="password"
-              [(ngModel)]="password"
+              [ngModel]="password()"
+              (ngModelChange)="password.set($event)"
               required
               autocomplete="new-password"
               placeholder="••••••••"
-              class="w-full px-4 py-2.5 border border-border rounded-lg bg-surface text-ink text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
             />
           </div>
 
-          <div class="field-group">
-            <label for="confirmPassword" class="block text-sm font-medium text-ink mb-1.5">Confirm Password</label>
+          <div class="field">
+            <label for="confirmPassword">Confirm Password</label>
             <input
               id="confirmPassword"
               type="password"
               name="confirmPassword"
-              [(ngModel)]="confirmPassword"
+              [ngModel]="confirmPassword()"
+              (ngModelChange)="confirmPassword.set($event)"
               required
               autocomplete="new-password"
               placeholder="••••••••"
-              class="w-full px-4 py-2.5 border border-border rounded-lg bg-surface text-ink text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
             />
           </div>
 
           <button
             type="submit"
-            class="w-full py-2.5 bg-primary text-white font-medium text-sm rounded-lg hover:bg-primary-hover transition-colors flex items-center justify-center gap-2 cursor-pointer border-none disabled:opacity-50 disabled:cursor-not-allowed"
+            class="auth-btn"
             [disabled]="loading()"
           >
             @if (loading()) {
-              <span class="spinner w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+              <span class="spinner"></span>
               Creating account...
             } @else {
               Create account
@@ -112,25 +110,192 @@ import { HttpErrorResponse } from '@angular/common/http';
           </button>
         </form>
 
-        <!-- Login link -->
-        <p class="text-center text-sm text-ink-secondary mt-6">
+        <p class="auth-footer">
           Already have an account?
-          <a routerLink="/login" class="text-primary font-medium hover:underline">Sign in</a>
+          <a routerLink="/login">Sign in</a>
         </p>
       </div>
     </div>
   `,
   styles: [
     `
-      @keyframes spin {
-        to { transform: rotate(360deg); }
+      .auth-page {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 4%, var(--color-surface-secondary)), var(--color-surface-secondary));
       }
-      .animate-spin {
+
+      .auth-card {
+        width: 100%;
+        max-width: 420px;
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow-lg);
+        padding: 40px 32px;
+      }
+
+      .auth-header {
+        text-align: center;
+        margin-bottom: 28px;
+      }
+
+      .logo-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: var(--radius-lg);
+        background: linear-gradient(135deg, var(--color-gradient-start), var(--color-gradient-end));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-weight: 700;
+        font-size: 22px;
+        margin: 0 auto 16px;
+      }
+
+      .auth-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--color-ink);
+        margin: 0 0 6px;
+        letter-spacing: -0.03em;
+      }
+
+      .auth-subtitle {
+        font-size: 14px;
+        color: var(--color-ink-secondary);
+        margin: 0;
+      }
+
+      .error-banner {
+        background: color-mix(in srgb, var(--color-danger) 10%, transparent);
+        border: 1px solid color-mix(in srgb, var(--color-danger) 30%, transparent);
+        color: var(--color-danger);
+        font-size: 13px;
+        padding: 12px 16px;
+        border-radius: var(--radius-md);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .validation-errors {
+        margin-bottom: 20px;
+        padding: 12px 16px;
+        background: color-mix(in srgb, var(--color-warning) 8%, transparent);
+        border: 1px solid color-mix(in srgb, var(--color-warning) 25%, transparent);
+        border-radius: var(--radius-md);
+      }
+
+      .validation-item {
+        font-size: 12px;
+        color: var(--color-warning);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 4px;
+      }
+      .validation-item:last-child { margin-bottom: 0; }
+
+      .auth-form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .field label {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--color-ink);
+      }
+
+      .field input {
+        width: 100%;
+        padding: 10px 14px;
+        font-size: 14px;
+        border: 1.5px solid var(--color-border);
+        border-radius: var(--radius-md);
+        background: var(--color-surface);
+        color: var(--color-ink);
+        outline: none;
+        transition: border-color 0.15s, box-shadow 0.15s;
+        box-sizing: border-box;
+      }
+      .field input:focus {
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 3px var(--color-primary-subtle);
+      }
+      .field input::placeholder {
+        color: var(--color-ink-secondary);
+        opacity: 0.6;
+      }
+
+      .auth-btn {
+        width: 100%;
+        padding: 11px 20px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #fff;
+        background: linear-gradient(135deg, var(--color-gradient-start), var(--color-gradient-end));
+        border: none;
+        border-radius: var(--radius-md);
+        cursor: pointer;
+        transition: opacity 0.15s, transform 0.1s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 4px;
+      }
+      .auth-btn:hover:not(:disabled) {
+        opacity: 0.92;
+        transform: translateY(-1px);
+      }
+      .auth-btn:active:not(:disabled) {
+        transform: translateY(0);
+      }
+      .auth-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .spinner {
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgba(255,255,255,0.3);
+        border-top-color: #fff;
+        border-radius: 50%;
         animation: spin 0.6s linear infinite;
       }
 
-      input.ng-invalid.ng-touched {
-        border-color: var(--color-danger);
+      .auth-footer {
+        text-align: center;
+        font-size: 13px;
+        color: var(--color-ink-secondary);
+        margin-top: 24px;
+      }
+      .auth-footer a {
+        color: var(--color-primary);
+        font-weight: 500;
+        text-decoration: none;
+      }
+      .auth-footer a:hover {
+        text-decoration: underline;
+      }
+
+      @keyframes spin {
+        to { transform: rotate(360deg); }
       }
     `,
   ],
@@ -139,10 +304,10 @@ export class RegisterPageComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  protected username = '';
-  protected email = '';
-  protected password = '';
-  protected confirmPassword = '';
+  protected username = signal('');
+  protected email = signal('');
+  protected password = signal('');
+  protected confirmPassword = signal('');
   protected loading = signal(false);
   protected errorMessage = signal('');
   protected validationErrors = signal<string[]>([]);
@@ -151,25 +316,30 @@ export class RegisterPageComponent {
     this.validationErrors.set([]);
     this.errorMessage.set('');
 
+    const username = this.username();
+    const email = this.email();
+    const password = this.password();
+    const confirmPassword = this.confirmPassword();
+
     // Client-side validation
     const errors: string[] = [];
-    if (this.username.length < 3 || this.username.length > 20) {
+    if (username.length < 3 || username.length > 20) {
       errors.push('Username must be between 3 and 20 characters');
     }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email)) {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       errors.push('Please enter a valid email address');
     }
-    if (this.password.length < 8) {
+    if (password.length < 8) {
       errors.push('Password must be at least 8 characters');
     } else {
-      if (!/[a-zA-Z]/.test(this.password)) {
+      if (!/[a-zA-Z]/.test(password)) {
         errors.push('Password must contain at least one letter');
       }
-      if (!/[0-9]/.test(this.password)) {
+      if (!/[0-9]/.test(password)) {
         errors.push('Password must contain at least one number');
       }
     }
-    if (this.password !== this.confirmPassword) {
+    if (password !== confirmPassword) {
       errors.push('Passwords do not match');
     }
 
@@ -180,7 +350,7 @@ export class RegisterPageComponent {
 
     this.loading.set(true);
 
-    this.authService.register(this.username, this.email, this.password).subscribe({
+    this.authService.register(username, email, password).subscribe({
       next: (res) => {
         this.authService.setToken(res.token);
         this.authService.currentUser.set(res.user);

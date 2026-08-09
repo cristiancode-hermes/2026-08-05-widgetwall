@@ -768,7 +768,7 @@ export class GreetingWidgetComponent implements OnInit {
         <div class="widget-grid" [style.grid-template-columns]="gridColumns()">
           @for (widget of dashboard()?.widgets || []; track widget.id) {
             <div
-              class="widget-card bg-surface border border-border rounded-lg shadow-md widget-enter"
+              class="widget-card"
               [class.widget-dragging]="draggingWidgetId() === widget.id"
               [class.widget-small]="widget.size === 'small'"
               [class.widget-large]="widget.size === 'large'"
@@ -779,7 +779,7 @@ export class GreetingWidgetComponent implements OnInit {
               (dragend)="onDragEnd()"
             >
               <!-- Widget header -->
-              <div class="widget-header flex items-center justify-between px-4 py-3 border-b border-border">
+              <div class="widget-header">
                 <div class="flex items-center gap-2">
                   <span class="drag-handle cursor-grab text-ink-secondary opacity-40 hover:opacity-70 text-sm">☰</span>
                   <span class="text-sm font-medium text-ink">{{ widget.title || widgetTypeName(widget.type) }}</span>
@@ -846,7 +846,7 @@ export class GreetingWidgetComponent implements OnInit {
               </div>
 
               <!-- Widget content -->
-              <div class="widget-content p-4">
+              <div class="widget-content">
                 @switch (widget.type) {
                   @case ('clock') {
                     <app-clock-widget [config]="widget.config" />
@@ -919,12 +919,35 @@ export class GreetingWidgetComponent implements OnInit {
     />
   `,
   styles: [
-    `
-      .widget-grid {
+    `\n      .widget-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
         gap: var(--space-lg);
         align-items: start;
+      }
+
+      .widget-card {
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
+        transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+      }
+      .widget-card:hover {
+        box-shadow: var(--shadow-md);
+        border-color: color-mix(in srgb, var(--color-primary) 20%, var(--color-border));
+      }
+
+      .widget-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .widget-content {
+        padding: 16px;
       }
 
       .widget-small {
@@ -951,19 +974,19 @@ export class GreetingWidgetComponent implements OnInit {
       }
 
       .widget-card {
-        animation: widget-appear 200ms ease-out both;
+        animation: widget-appear 250ms cubic-bezier(0.16, 1, 0.3, 1) both;
       }
 
       .widget-card:nth-child(1) { animation-delay: 0ms; }
-      .widget-card:nth-child(2) { animation-delay: 50ms; }
-      .widget-card:nth-child(3) { animation-delay: 100ms; }
-      .widget-card:nth-child(4) { animation-delay: 150ms; }
-      .widget-card:nth-child(5) { animation-delay: 200ms; }
-      .widget-card:nth-child(6) { animation-delay: 250ms; }
+      .widget-card:nth-child(2) { animation-delay: 40ms; }
+      .widget-card:nth-child(3) { animation-delay: 80ms; }
+      .widget-card:nth-child(4) { animation-delay: 120ms; }
+      .widget-card:nth-child(5) { animation-delay: 160ms; }
+      .widget-card:nth-child(6) { animation-delay: 200ms; }
 
       .widget-dragging {
         opacity: 0.5;
-        box-shadow: var(--shadow-widget-drag);
+        box-shadow: var(--shadow-widget-drag) !important;
       }
 
       .config-panel {
@@ -972,29 +995,24 @@ export class GreetingWidgetComponent implements OnInit {
       }
 
       .picker-card {
-        min-height: 100px;
+        border-radius: var(--radius-lg);
+        min-height: 110px;
+        transition: all 0.15s;
+      }
+      .picker-card:hover {
+        border-color: var(--color-primary) !important;
+        background: var(--color-primary-subtle) !important;
+        transform: translateY(-2px);
       }
 
       @keyframes dropdown-appear {
-        from {
-          opacity: 0;
-          transform: translateY(-4px) scale(0.96);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-        }
+        from { opacity: 0; transform: translateY(-4px) scale(0.96); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
       }
 
       @keyframes widget-appear {
-        from {
-          opacity: 0;
-          transform: translateY(8px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
       }
     `,
   ],
